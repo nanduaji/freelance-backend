@@ -12,9 +12,6 @@ app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } })); // 
 app.use(cors()); // Enable CORS for frontend requests
 
 
-const amountInAED = 2; // Must be at least 2 AED
-const amountInFils = amountInAED * 100; // Convert to fils
-
 
 
 // Create Payment Intent Route
@@ -27,9 +24,9 @@ app.post("/api/create-payment-intent", async (req, res) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount:amountInFils, 
+      amount: amount * 100, 
       currency: "aed",
-      payment_method_types: ["card"],
+      automatic_payment_methods: { enabled: true },
     });
 console.log("clientSecret",paymentIntent.client_secret)
     res.json({ clientSecret: paymentIntent.client_secret });
