@@ -28,7 +28,6 @@ app.post("/api/create-payment-intent", async (req, res) => {
       currency: "aed",
       automatic_payment_methods: { enabled: true },
     });
-console.log("clientSecret",paymentIntent.client_secret)
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error("Stripe error:", error);
