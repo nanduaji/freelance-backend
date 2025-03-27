@@ -18,7 +18,7 @@ app.use(cors()); // Enable CORS for frontend requests
 app.post("/api/create-payment-intent", async (req, res) => {
   try {
     const { amount } = req.body;
-
+console.log("amount",amount)
     if (!amount || amount <= 0) {
       return res.status(400).json({ error: "Invalid payment amount" });
     }
@@ -28,6 +28,7 @@ app.post("/api/create-payment-intent", async (req, res) => {
       currency: "aed",
       automatic_payment_methods: { enabled: true },
     });
+console.log("clientSecret",paymentIntent.client_secret)
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error("Stripe error:", error);
