@@ -9,7 +9,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 stripe.accounts.retrieve().then(console.log).catch(console.error)
 // Middleware
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } })); // Parse JSON request body
-app.use(cors()); // Enable CORS for frontend requests
+app.use(
+  cors({
+    origin: "https://freelance-sage-two.vercel.app",
+    methods: "GET,POST",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
 
 
