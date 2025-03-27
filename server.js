@@ -11,9 +11,9 @@ stripe.accounts.retrieve().then(console.log).catch(console.error)
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } })); // Parse JSON request body
 app.use(
   cors({
-    origin: "https://freelance-sage-two.vercel.app",
-    methods: "GET,POST",
-    allowedHeaders: "Content-Type,Authorization",
+    origin: "https://freelance-sage-two.vercel.app", // ✅ No trailing slash
+    methods: ["GET", "POST"], // ✅ Use array format
+    allowedHeaders: ["Content-Type", "Authorization"], // ✅ Use array format
   })
 );
 
