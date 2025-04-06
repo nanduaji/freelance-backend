@@ -18,12 +18,13 @@ app.use(express.static(__dirname));
 // Create Payment Intent Route
 app.post("/api/create-payment-intent", async (req, res) => {
   try {
-    const { amount } = req.body;
-    console.log("amount", amount)
+    let { amount } = req.body;
+    console.log("totalAmount", amount)
     if (!amount || amount <= 0) {
       return res.status(400).json({ error: "Invalid payment amount" });
     }
-
+    amount = parseFloat(amount.toFixed(2));
+    console.log("final amount", amount)
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount * 100,
       currency: "aed",
@@ -38,8 +39,12 @@ app.post("/api/create-payment-intent", async (req, res) => {
 });
 
 app.post("/send-confirmation-email", async (req, res) => {
-  const { email, bookingDetails: { roomName, checkinDate, checkoutDate, totalAmount, roomQuantity, unitPrice, userName } } = req.body;
-  console.log("send-confirmation-email", req.body)
+  const { email, bookingDetails: { roomName, checkinDate, checkoutDate, roomQuantity, unitPrice, userName } } = req.body;
+  console.log("send-confirmation-email", req.body);
+  let { totalAmount } = req.body.bookingDetails;
+  totalAmount = Number(totalAmount); 
+  totalAmount = parseFloat(totalAmount.toFixed(2));
+  console.log("totalAmount", totalAmount);
   if (!email) {
     return res.status(400).json({ error: "Email is required" });
   }
