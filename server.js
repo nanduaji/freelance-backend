@@ -68,7 +68,7 @@ app.post("/api/create-payment-intent", async (req, res) => {
 });
 
 app.post("/send-confirmation-email", async (req, res) => {
-  const { email, bookingDetails: { roomName, checkinDate, checkoutDate, roomQuantity, unitPrice, userName } } = req.body;
+  const { email, bookingDetails: { roomName, checkinDate, checkoutDate, roomQuantity, unitPrice, userName,VAT,tourismFee,serviceCharge,municipalityFee } } = req.body;
   console.log("send-confirmation-email", req.body);
   let { totalAmount } = req.body.bookingDetails;
   totalAmount = Number(totalAmount); 
@@ -214,8 +214,12 @@ app.post("/send-confirmation-email", async (req, res) => {
           </table>
     
           <div style="text-align: right; margin-top: 20px;">
-            <h6><strong>Subtotal:</strong> ${totalAmount}</h6>
+            <h6><strong>Subtotal:</strong> AED ${unitPrice}</h6>
             <h6 style="margin-top:10px"><strong>Tax:</strong> 0</h6>
+            <h6 style="margin-top:10px"><strong>VAT:</strong>AED ${VAT.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Tourism fee:</strong>AED ${tourismFee.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Service charge:</strong>AED ${serviceCharge.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Municipality fee:</strong>AED ${municipalityFee.toFixed(2)}</h6>
             <hr style="border: 1px solid #ddd; margin: 10px 0;">
             <h5 style="font-weight: bold; margin-top: 10px;">Total: ${totalAmount}</h5>
           </div>
@@ -296,8 +300,12 @@ app.post("/send-confirmation-email", async (req, res) => {
           </table>
     
           <div style="text-align: right; margin-top: 20px;">
-            <h6><strong>Subtotal:</strong> ${totalAmount}</h6>
+            <h6><strong>Subtotal:</strong> AED ${unitPrice}</h6>
             <h6 style="margin-top:10px"><strong>Tax:</strong> 0</h6>
+            <h6 style="margin-top:10px"><strong>VAT:</strong>AED ${VAT.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Tourism fee:</strong>AED ${tourismFee.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Service charge:</strong>AED ${serviceCharge.toFixed(2)}</h6>
+            <h6 style="margin-top:10px"><strong>Municipality fee:</strong>AED ${municipalityFee.toFixed(2)}</h6>
             <hr style="border: 1px solid #ddd; margin: 10px 0;">
             <h5 style="font-weight: bold; margin-top: 10px;">Total: ${totalAmount}</h5>
           </div>
