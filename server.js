@@ -14,8 +14,37 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.static(__dirname));
 
 
+// Create Payment Intent Route For Google Pay
+app.post('/create-payment-intent-google-pay', async (req, res) => {
+  try {
+    const { amount, token } = req.body;
+    console.log('Received amount:', amount);
+    // Directly create a paymentIntent with token
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: 'aed',
+      payment_method_data: {
+        type: 'card',
+        card: { token },
+      },
+      confirm: true,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: 'never',
+      },
+    });
 
-// Create Payment Intent Route
+    return res.send({
+      success: true,
+      clientSecret: paymentIntent.client_secret,
+      status: paymentIntent.status,
+    });
+  } catch (err) {
+    console.error('Stripe Error:', err.message);
+    return res.status(500).send({ success: false, error: err.message });
+  }
+});
+// Create Payment Intent Route For card payments and apple pay
 app.post("/api/create-payment-intent", async (req, res) => {
   try {
     let { amount } = req.body;
