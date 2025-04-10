@@ -188,7 +188,7 @@ app.post("/send-confirmation-email", async (req, res) => {
           <h5>${userName}</h5>
     
           <div style="background-color: #d1e7dd; padding: 10px; margin-top: 10px;">
-            <p><strong>Date:</strong> ${new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" })}</p>
+            <p><strong>Date:</strong> ${new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' })).toDateString()}</p>
             <p><strong>Check-in Date:</strong> ${new Date(checkinDate).toDateString()}</p>
             <p><strong>Check-out Date:</strong> ${new Date(checkoutDate).toDateString()}</p>
             <p><strong>Invoice No:</strong> ${invoiceNumber}</p>
@@ -207,21 +207,20 @@ app.post("/send-confirmation-email", async (req, res) => {
               <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #ddd;">${roomName}</td>
                 <td style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">${roomQuantity}</td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${unitPrice}</td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${totalAmount}</td>
+                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">AED ${unitPrice}</td>
+                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">AED ${unitPrice}</td>
               </tr>
             </tbody>
           </table>
     
           <div style="text-align: right; margin-top: 20px;">
             <h6><strong>Subtotal:</strong> AED ${unitPrice}</h6>
-            <h6 style="margin-top:10px"><strong>Tax:</strong> 0</h6>
             <h6 style="margin-top:10px"><strong>VAT:</strong>AED ${VAT.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Tourism fee:</strong>AED ${tourismFee.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Service charge:</strong>AED ${serviceCharge.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Municipality fee:</strong>AED ${municipalityFee.toFixed(2)}</h6>
             <hr style="border: 1px solid #ddd; margin: 10px 0;">
-            <h5 style="font-weight: bold; margin-top: 10px;">Total: ${totalAmount}</h5>
+            <h5 style="font-weight: bold; margin-top: 10px;">Total: AED ${totalAmount}</h5>
           </div>
 
           <!-- Message with adjusted width and alignment -->
@@ -274,7 +273,7 @@ app.post("/send-confirmation-email", async (req, res) => {
           <h5>${userName}</h5>
     
           <div style="background-color: #d1e7dd; padding: 10px; margin-top: 10px;">
-            <p><strong>Date:</strong> ${new Date().toLocaleString("en-US", { timeZone: "Asia/Dubai" })}</p>
+            <p><strong>Date:</strong> ${new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Dubai' })).toDateString()}</p>
             <p><strong>Check-in Date:</strong> ${new Date(checkinDate).toDateString()}</p>
             <p><strong>Check-out Date:</strong> ${new Date(checkoutDate).toDateString()}</p>
             <p><strong>Invoice No:</strong> ${invoiceNumber}</p>
@@ -293,21 +292,20 @@ app.post("/send-confirmation-email", async (req, res) => {
               <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #ddd;">${roomName}</td>
                 <td style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">${roomQuantity}</td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${unitPrice}</td>
-                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${totalAmount}</td>
+                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">AED ${unitPrice}</td>
+                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">AED ${unitPrice}</td>
               </tr>
             </tbody>
           </table>
     
           <div style="text-align: right; margin-top: 20px;">
             <h6><strong>Subtotal:</strong> AED ${unitPrice}</h6>
-            <h6 style="margin-top:10px"><strong>Tax:</strong> 0</h6>
             <h6 style="margin-top:10px"><strong>VAT:</strong>AED ${VAT.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Tourism fee:</strong>AED ${tourismFee.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Service charge:</strong>AED ${serviceCharge.toFixed(2)}</h6>
             <h6 style="margin-top:10px"><strong>Municipality fee:</strong>AED ${municipalityFee.toFixed(2)}</h6>
             <hr style="border: 1px solid #ddd; margin: 10px 0;">
-            <h5 style="font-weight: bold; margin-top: 10px;">Total: ${totalAmount}</h5>
+            <h5 style="font-weight: bold; margin-top: 10px;">Total: AED ${totalAmount}</h5>
           </div>
 
           <!-- Message with adjusted width and alignment -->
@@ -337,10 +335,6 @@ app.post("/send-confirmation-email", async (req, res) => {
 
       `,
     };
-
-
-
-
     await transporter.sendMail(mailOptions);
     await transporter.sendMail(mailOptionsForTheOwner);
     await transporter.sendMail(invoiceMailForTheOwner);
